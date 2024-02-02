@@ -27,10 +27,11 @@ async def com(event):
 @client.on(events.NewMessage(incoming=True))
 async def wait(event):
 	if event.chat_id > 0 and work[0]:
-		print(event.chat_id)
 		await client.get_dialogs()
 		en = await client.get_entity(event.chat_id)
-		if not(en.User['bot']):
+		user = await event.get_sender()
+		if not(user.bot):
+			print(event.chat_id)
 			async with client.action(en, 'game'):
 				messages = await client.get_messages(event.chat_id)
 				user_input = messages[0].text
@@ -38,7 +39,7 @@ async def wait(event):
 					history[event.chat_id]
 				except KeyError:
 					history[event.chat_id] = ""
-				gpt_response, history[event.chat_id] = chat_with_gpt(user_input, history[event.chat_id], api_key=config.gpt_key)
+				gpt_response, history[event.chat_id] = chat_with_gpt(user_input, history[event.chat_id], "gpt-3.5-turbo-instruct", api_key=config.gpt_key)
 				await asyncio.sleep(3)
 				await client.send_message(event.chat_id, gpt_response)
 			await asyncio.sleep(20)
