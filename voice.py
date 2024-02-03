@@ -8,9 +8,9 @@ def voice(oauth_token, catalog_id, name):
 	with open(f"{name[:-4]}.wav", 'rb') as f:
 		data = f.read()
 
-	recognizeShortAudio = ShortAudioRecognition(session)
-
-	text = recognizeShortAudio.recognize(data, format='lpcm', sampleRateHertz='48000')
 	remove(f"{name[:-4]}.wav")
 	remove(f"{name}")
+	recognizeShortAudio = ShortAudioRecognition(session)
+	text = recognizeShortAudio.recognize(data, format='lpcm', sampleRateHertz='48000')
+	
 	return text

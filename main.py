@@ -39,16 +39,24 @@ async def wait(event):
 				try:
 					if messages[0].to_dict()['media']['document']['mime_type'] == 'audio/ogg':
 						path = await messages[0].download_media()
-						user_input = voice.voice(config.y_token, config.y_catalog_id, path)
+						try:
+							user_input = voice.voice(config.y_token, config.y_catalog_id, path)
+						except ValueError:
+							await client.send_message(event.chat_id, "⚠️Ваше голосовое сообщение не должно превышать 1 Мб")
+							user_input = ''
 				except TypeError:
 					user_input = messages[0].text
-				try:
-					history[event.chat_id]
 				except KeyError:
-					history[event.chat_id] = ""
-				gpt_response, history[event.chat_id] = chat_with_gpt(user_input, history[event.chat_id], "gpt-3.5-turbo-instruct", api_key=config.gpt_key)
-				await asyncio.sleep(3)
-				await client.send_message(event.chat_id, gpt_response)
+					user_input = messages[0].text
+				
+				if user_input != '':
+					try:
+						history[event.chat_id]
+					except KeyError:
+						history[event.chat_id] = ""
+					gpt_response, history[event.chat_id] = chat_with_gpt(user_input, history[event.chat_id], "gpt-3.5-turbo-instruct", api_key=config.gpt_key)
+					await asyncio.sleep(3)
+					await client.send_message(event.chat_id, gpt_response)
 			await asyncio.sleep(20)
 
 async def main():
