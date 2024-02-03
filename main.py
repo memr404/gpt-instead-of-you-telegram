@@ -36,10 +36,11 @@ async def wait(event):
 			print(event.chat_id)
 			async with client.action(en, 'game'):
 				messages = await client.get_messages(event.chat_id)
-				if messages[0].to_dict()['media']['document']['mime_type'] == 'audio/ogg':
-					path = await messages[0].download_media()
-					user_input = voice.voice(config.y_token, config.y_catalog_id, path)
-				else:
+				try:
+					if messages[0].to_dict()['media']['document']['mime_type'] == 'audio/ogg':
+						path = await messages[0].download_media()
+						user_input = voice.voice(config.y_token, config.y_catalog_id, path)
+				except TypeError:
 					user_input = messages[0].text
 				try:
 					history[event.chat_id]
