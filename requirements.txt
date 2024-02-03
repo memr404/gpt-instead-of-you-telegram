@@ -1,0 +1,4 @@
+openai==0.28.0
+Telethon==1.33.1
+speechkit==2.2.2
+asyncio

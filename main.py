@@ -1,6 +1,8 @@
+import asyncio, config, voice
+
 from telethon import TelegramClient, events, functions, types
 from gpt import chat_with_gpt
-import time, asyncio, config
+from random import randint
 
 work = [True]
 global history
@@ -34,7 +36,11 @@ async def wait(event):
 			print(event.chat_id)
 			async with client.action(en, 'game'):
 				messages = await client.get_messages(event.chat_id)
-				user_input = messages[0].text
+				if messages[0].to_dict()['media']['document']['mime_type'] == 'audio/ogg':
+					path = await messages[0].download_media()
+					user_input = voice.voice(config.y_token, config.y_catalog_id, path)
+				else:
+					user_input = messages[0].text
 				try:
 					history[event.chat_id]
 				except KeyError:
@@ -49,7 +55,6 @@ async def main():
 	print("Waiting for a message...")
 	await client.run_until_disconnected()
 
-def stop():
-	time.sleep(20)
+
 
 client.loop.run_until_complete(main())

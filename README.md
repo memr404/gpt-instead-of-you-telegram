@@ -8,13 +8,20 @@ This project is a Telegram bot integrated with the GPT model to provide automate
 - **Start/Stop Commands**: Control the bot's operation by sending 'start' or 'stop' messages.
 - **Conversation History**: Maintains a history of interactions for each chat to provide context to the GPT model.
 - **User and Bot Filtering**: Ignores messages from bots and only responds to messages from user-initiated chats.
+- **Voice message recognition**: The voice message is translated into text and transmitted to GPT
 
 ## Requirements
 
 - Python 3.6+
-- Telethon
-- asyncio
+- ffmpeg (Only for linux)
+```bash
+sudo apt install ffmpeg
+```
 - A custom GPT model or API (assumed to be accessed via a `chat_with_gpt` function in a `gpt` module)
+- Install the rest of the libraries from `requirements.txt`
+```bash
+pip install -r requirements.txt
+```
 
 ## Configuration
 
@@ -24,6 +31,8 @@ Before running the bot, you need to set up your configuration file (`config.py`)
 - `api_hash`: Your Telegram API Hash
 - `your_id`: Your Telegram User ID (to control the start/stop commands)
 - `gpt_key`: Your GPT API key
+- `y_token`: Your yandex access token
+- `y_catalog_id`: Your yandex folder id 
 
 ## Installation
 
@@ -31,10 +40,11 @@ Before running the bot, you need to set up your configuration file (`config.py`)
 2. Install the required Python packages:
 
 ```bash
-pip install telethon asyncio
+pip install -r requirements.txt
+sudo apt install ffmpeg
 ```
 
-3. Create a `config.py` file with your Telegram and GPT configuration details.
+3. Open a `config.py` file with your Telegram and GPT configuration details.
 4. Ensure the `gpt` module and the `chat_with_gpt` function are correctly set up and accessible.
 
 ## Usage
@@ -72,13 +82,20 @@ The bot will automatically respond to incoming messages from user chats when act
 - **Команды запуска/остановки**: Управление работой бота с помощью сообщений 'start' или 'stop'.
 - **История беседы**: Поддержка истории взаимодействий для каждого чата для предоставления контекста модели GPT.
 - **Фильтрация пользователей и ботов**: Игнорирование сообщений от ботов и ответ только на сообщения от пользовательских чатов.
+- **Распознование голосовых сообщений**: Голосовое сообщение переводится в текст и передаётся GPT
 
 ## Требования
 
 - Python 3.6+
-- Telethon
-- asyncio
+- ffmpeg (Только для linux)
+```bash
+sudo apt install ffmpeg
+```
 - Пользовательская модель GPT или API (предполагается, что доступ осуществляется через функцию `chat_with_gpt` в модуле `gpt`)
+- Установите остальные библиотеки из `requirements.txt`
+```bash
+pip install -r requirements.txt
+```
 
 ## Настройка
 
@@ -88,6 +105,8 @@ The bot will automatically respond to incoming messages from user chats when act
 - `api_hash`: Ваш Telegram API Hash
 - `your_id`: Ваш Telegram User ID (для управления командами start/stop)
 - `gpt_key`: Ваш ключ API GPT
+- `y_token`: Ваш токен доступа к Яндексу
+- `y_catalog_id`: Ваш идентификатор папки в Яндексе
 
 ## Установка
 
@@ -95,7 +114,8 @@ The bot will automatically respond to incoming messages from user chats when act
 2. Установите необходимые пакеты Python:
 
 ```bash
-pip install telethon asyncio
+pip install -r requirements.txt
+sudo apt install ffmpeg
 ```
 
 3. Создайте файл `config.py` с деталями конфигурации Telegram и GPT.
