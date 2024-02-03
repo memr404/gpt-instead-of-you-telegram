@@ -16,8 +16,9 @@ def chat_with_gpt(prompt, session_history, model, api_key):
 	return answer, new_history
 
 if __name__ == '__main__':
+	api_key = '' # !!!
 	session_history = ""
 	while True:
 		user_input = input("You: ")
-		gpt_response, session_history = chat_with_gpt(user_input, session_history, api_key=api_key)
+		gpt_response, session_history = chat_with_gpt(user_input, session_history, 'gpt-3.5-turbo-instruct' , api_key=api_key)
 		print("GPT-3.5-turbo:", gpt_response)
