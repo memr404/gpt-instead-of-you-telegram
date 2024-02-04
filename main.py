@@ -21,9 +21,13 @@ async def com(event):
 	user_input = messages[0].text
 	if user_input == 'stop':
 		work[0] = False
+		rez = user_input + '✅'
+		await client.edit_message(your_id, messages[0], rez)
 		print('stop')
 	elif user_input == 'start':
 		work[0] = True
+		rez = user_input + '✅'
+		await client.edit_message(your_id, messages[0], rez)
 		print('start')
 
 @client.on(events.NewMessage(incoming=True))
