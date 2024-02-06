@@ -12,7 +12,7 @@ api_id = config.api_id
 api_hash = config.api_hash
 your_id = config.your_id
 
-client = TelegramClient('session_name', api_id, api_hash)
+client = TelegramClient('session_name', api_id, api_hash, system_version="4.16.30-vxCUSTOM")
 
 
 @client.on(events.NewMessage(chats=your_id))
